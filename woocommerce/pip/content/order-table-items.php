@@ -119,7 +119,7 @@ $item_code_name = '';
 						</tr>
 						<tr class="deliverydate bold">
 							<td>
-								DELIVERY DATE: <?php echo date('m-d-Y', get_post_meta($order_id, 'jckwds_date', true)); ?>
+								DELIVERY DATE: <?php echo date('m-d-Y - l', strtotime(get_post_meta($order_id, 'jckwds_date', true))); ?>
 							</td>
 						</tr>
 						<tr class="orderno">
@@ -156,7 +156,7 @@ $item_code_name = '';
 								<span style="width:75%">ORD. NO: <?php echo $order_id; ?>&nbsp;&nbsp;Taken: <?php echo date('m-d-y h:i:s A', strtotime($order->order_date)); ?>&nbsp;&nbsp;Sold By: LS</span><span class="sigbox" style="width:25%;border:1px solid;padding: 1% 13% 5%;margin: 0 3%;"></span>
 							</td>
 							<td>
-								Printed: <?php echo date( 'Y-m-d H:i:s', current_time( 'timestamp' ) ); ?>
+								Printed: <?php echo date( 'Y-m-d H:i:s A', current_time( 'timestamp' ) ); ?>
 							</td>
 						</tr>
 						<tr>
@@ -167,5 +167,25 @@ $item_code_name = '';
 								ITEM: <?php echo $item_code . ' ' . strtoupper($item_code_name); ?>
 							</td>
 						</tr>
+						<tr>
+							<td colspan="2">
+								PICK UP DATE: <?php ?>
+							</td>
+							<td>
+								<strong>DELIVERY: <?php echo date('m-d-Y - l', strtotime(get_post_meta( $order_id, 'jckwds_date', true ))); ?></strong>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="border-bottom:1px solid">
+							</td>
+							<td>
+								Recipient: <?php echo $order->get_formatted_shipping_address(); ?>
+							</td>
+						</tr>
+							
+						
 					</tbody>
+					<style>
+					table td {padding:0!important;}
+					</style>
 					<?php
