@@ -1,12 +1,26 @@
 <?php 
 /* 
-* Plugin Name:  WooCommerce PIP Custom
+Plugin Name:  WooCommerce PIP Custom
+Plugin URI: https://github.com/rayflores/jeffweber
+Description: Use Custom PIP templates **for Admins Only.
+Version: 1.0
+Author: Ray Flores
+Author URI: https://www.rayflores.com/
 */
+
 function wc_pip_custom_plugin_path() {
   // gets the absolute path to this plugin directory
   return untrailingslashit( plugin_dir_path( __FILE__ ) );
 }
-add_filter( 'woocommerce_locate_template', 'wc_pip_custom_locate_template', 10, 3 );
+function show_only_to_admins(){
+	global $current_user;
+	if ( current_user_can( 'manage_options') && is_admin() ) {
+		add_filter( 'woocommerce_locate_template', 'wc_pip_custom_locate_template', 10, 3 );
+	}
+}
+add_action( 'init','show_only_to_admins' );
+
+
 function wc_pip_custom_locate_template( $template, $template_name, $template_path ) {
   global $woocommerce; 
   $_template = $template;
