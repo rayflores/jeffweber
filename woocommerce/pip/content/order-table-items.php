@@ -177,13 +177,94 @@ $item_code_name = '';
 						</tr>
 						<tr>
 							<td colspan="2" style="border-bottom:1px solid">
+								&nbsp;
 							</td>
-							<td>
+							<td rowspan="4">
 								Recipient: <?php echo $order->get_formatted_shipping_address(); ?>
 							</td>
 						</tr>
+						<tr>
+							<td colspan="2">
+								Recipient: <?php echo $order->shipping_first_name . ' ' . $order->shipping_last_name; ?>
+							</td>
 							
-						
+						</tr>
+						<tr>
+							<td colspan="2">
+								ITEM: <strong><?php echo $item_code . '</strong> OCCASSION:' . '<span style="color:#777;font-style:italic;"><strong>Thank you</strong>  Birthday  Anniversary  Sympathy  Funeral  Valentine&rsquo;s Day  Mother&rsquo;s Day  Thanksgiving  Holiday  Miscellaneous  Gift Cert'; ?></span>
+							</td>							
+						</tr>
+						<tr>
+							<td colspan="2"></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<table style="margin:0">
+									<tbody>
+										<tr style="border-bottom:1px solid">
+											<th>QTY</th>
+											<th>DESCRIPTION</th>
+											<th>COLORS</th>
+											<th>UNIT PRICE</th>
+											<th>TOTAL</th>
+										</tr>
+										<?php 
+										$cnt = 1;
+										foreach ( $order->get_items() as $item_key => $item ) :
+										$product = $order->get_product_from_item($item);
+										?>
+										<tr>
+											<td>
+												<?php echo $cnt; ?>
+											</td>
+											<td>
+												<?php echo $item_code . ' - ' . $item['name']; ?>
+											</td>
+											<td>
+												Vibrant
+											</td>
+											<td>
+												<?php echo $product->get_price(); ?>
+											</td>
+											<td>
+												<?php echo $order->get_total(); ?>
+											</td>
+											
+										</tr>
+										<?php 
+										$cnt++;
+										endforeach;
+										?>
+									</tbody>
+								</table>
+							</td>
+							<td rowspan="2">
+								Sold To: <?php echo $order->get_formatted_billing_address(); ?><br/>
+								<?php echo $order->billing_phone; ?>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								Designer Requests: ?? 
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								Designer&rsquo;s Initials_____________   Date Made:______________
+							</td>
+							<?php 
+							$driver_val = get_post_meta( $order_id, '_shipping_wcj_checkout_field_8', true ); 
+							$business = strtoupper(get_post_meta( $order_id, '_shipping_wcj_checkout_field_5', true ));
+							$driver = substr($driver_val, 0, strpos($driver_val, "M. "));
+							?>
+							<td>
+								Driver:  <?php echo $business . ' ' . $driver_val . 'M.'; ?>
+							</td>
+						</tr>
 					</tbody>
 					<style>
 					table td {padding:0!important;}
