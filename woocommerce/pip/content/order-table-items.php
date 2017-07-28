@@ -107,13 +107,14 @@ $item_code_name = '';
 								<br/>
 								<hr/>
 							</td>
-							<td rowspan="4" class="message">
+							<td rowspan="4" class="message" style="text-align:center;">
 								<p>
+									<?php echo $order->shipping_first_name; ?>,<br/>
 									Thank you for your dedication to the JDF event. Your great<br/>
 									ideas, tireless energy and amazing organizational skills were<br/>
 									a huge part of making this our most successful year yet! You</br/>
 									have your own fan club at Marsteller.<br/>
-									<span>From Sarah, Dianne,<br/>
+									<span style="text-align:left;">From Sarah, Dianne,<br/>
 									and all of the JDF 2017 Gala Committee Members</span></p>
 							</td>
 						</tr>
@@ -135,13 +136,13 @@ $item_code_name = '';
 							</td>
 						</tr>
 						<tr class="email-phone">
-							<td>
+							<td style="text-align:center;">
 								<small>robinwoodflowers.com 513-531-5590</small>
 							</td>
 							<td>
 								Driver&#39;s Initials ________
 							</td>
-							<td>
+							<td style="text-align:center;">
 								<small>robinwoodflowers.com 513-531-5590</small>
 							</td>
 						</tr>
@@ -268,5 +269,6 @@ $item_code_name = '';
 					</tbody>
 					<style>
 					table td {padding:0!important;}
+					table, table tr, table td, table th {border:none;}
 					</style>
 					<?php
