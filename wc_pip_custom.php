@@ -14,7 +14,7 @@ function wc_pip_custom_plugin_path() {
 }
 function show_only_to_admins(){
 	global $current_user;
-	if ( current_user_can( 'manage_options') && is_admin() ) {
+	if ( ( current_user_can( 'manage_options') || current_user_can( 'manage_woocommerce' ) ) && is_admin() ) {
 		add_filter( 'woocommerce_locate_template', 'wc_pip_custom_locate_template', 10, 3 );
 	}
 }
