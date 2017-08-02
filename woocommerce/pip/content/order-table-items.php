@@ -38,8 +38,11 @@ defined( 'ABSPATH' ) or exit;
  * @since 3.0.0
  */
 foreach ($order->get_items() as $item_id => $item ){
+	
 	$product_id = $item['product_id'];
 	$term_list = wp_get_post_terms($product_id, 'product_cat', array('fields' => 'names'));
+	$item_meta = wc_get_order_item_meta($item_id, '_wcj_product_input_fields_global_1', true );
+
 }
 $item_code = '';
 $item_code_name = '';
@@ -246,7 +249,7 @@ $item_code_name = '';
 						</tr>
 						<tr>
 							<td colspan="2">
-								Designer Requests: ?? 
+								Designer Requests: <?php echo $item_meta; ?> 
 							</td>
 						</tr>
 						<tr>

@@ -39,4 +39,4 @@ defined( 'ABSPATH' ) or exit;
  */
 					
 					//  left blank intentionally
-					echo 'Formatted Billing Address: ' . $order->get_formatted_billing_address();
+					//echo 'Formatted Billing Address: ' . $order->get_formatted_billing_address();
