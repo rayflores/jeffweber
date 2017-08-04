@@ -152,12 +152,12 @@ $item_code_name = '';
 						<tr class="orderdetails">
 							<td colspan="2"></td>
 							<td>
-								ORD. NO: <?php echo $order_id; ?>&nbsp;&nbsp;Taken: <?php echo date('m-d-y h:i:s A', strtotime($order->order_date)); ?>&nbsp;&nbsp;Sold By: LS
+								ORD. NO: <?php echo $order_id; ?>&nbsp;&nbsp;Taken: <?php echo date('m-d-y h:i:s A', strtotime($order->order_date)); ?>&nbsp;&nbsp;Sold By: <?php echo get_post_meta($order->id, '_sold_by', true); ?>
 							</td>
 						</tr>
 						<tr>
 							<td colspan="2">
-								<span style="width:75%">ORD. NO: <?php echo $order_id; ?>&nbsp;&nbsp;Taken: <?php echo date('m-d-y h:i:s A', strtotime($order->order_date)); ?>&nbsp;&nbsp;Sold By: LS</span><span class="sigbox" style="width:25%;border:1px solid;padding: 1% 13% 5%;margin: 0 3%;"></span>
+								<span style="width:75%">ORD. NO: <?php echo $order_id; ?>&nbsp;&nbsp;Taken: <?php echo date('m-d-y h:i:s A', strtotime($order->order_date)); ?>&nbsp;&nbsp;Sold By: <?php echo get_post_meta($order->id, '_sold_by', true); ?></span><span class="sigbox" style="width:25%;border:1px solid;padding: 1% 13% 5%;margin: 0 3%;"></span>
 							</td>
 							<td>
 								Printed: <?php echo date( 'Y-m-d H:i:s A', current_time( 'timestamp' ) ); ?>

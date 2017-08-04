@@ -51,3 +51,38 @@ function wc_pip_custom_locate_template( $template, $template_name, $template_pat
   // Return what we found
   return $template;
 }
+// get current user logged in Name -> for initials
+add_action('woocommerce_after_order_notes', 'add_billing_field', 10, 1);
+ 
+function add_billing_field( $checkout ) {
+	$getmemid = 'WEB';
+	
+	if ( ( current_user_can( 'manage_options') || current_user_can( 'manage_woocommerce' ) ) ){
+		$current_user = wp_get_current_user();
+		$first_name = $current_user->user_firstname;
+		$last_name = $current_user->user_lastname;
+		$getmemid = strtoupper($first_name[0] . $last_name[0]);
+	} 
+ 
+	// Output the hidden link
+    echo '<div id="user_link_hidden_checkout_field">
+            <input type="hidden" class="input-hidden" name="sold_by" id="sold_by" value="' . $getmemid . '">
+    </div>';
+ 
+}
+// save sold_by
+add_action( 'woocommerce_checkout_update_order_meta', 'save_custom_checkout_hidden_field', 10, 1 );
+function save_custom_checkout_hidden_field( $order_id ) {
+
+    if ( ! empty( $_POST['sold_by'] ) )
+        update_post_meta( $order_id, '_sold_by', sanitize_text_field( $_POST['sold_by'] ) );
+
+}
+/**
+ * Display field value on the order edit page
+ */
+add_action( 'woocommerce_admin_order_data_after_billing_address', 'sold_by_checkout_field_display_admin_order_meta', 10, 1 );
+
+function sold_by_checkout_field_display_admin_order_meta($order){
+    echo '<p><strong>'.__('Sold By').':</strong> <br/>' . get_post_meta( $order->id, '_sold_by', true ) . '</p>';
+}
