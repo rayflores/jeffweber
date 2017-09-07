@@ -41,8 +41,10 @@ foreach ($order->get_items() as $item_id => $item ){
 	
 	$product_id = $item['product_id'];
 	$term_list = wp_get_post_terms($product_id, 'product_cat', array('fields' => 'names'));
-	$item_meta = wc_get_order_item_meta($item_id, '_wcj_product_input_fields_global_1', true );
-
+	$designer_notes = wc_get_order_item_meta($item_id, 'REQUEST FOR DESIGNER', true );
+	
+	$occasion_array = array( 'Thank you', 'Birthday', 'Anniversary', 'Sympathy', 'Funeral', 'Valentines Day',
+'Mothers Day', 'Thanksgiving', 'Holiday', 'Miscellaneous', 'Gift Card' );
 }
 $item_code = '';
 $item_code_name = '';
@@ -60,14 +62,14 @@ $item_code_name = '';
 					?>
 					<tbody class="order-table-body">
 						<tr class="logo">
-							<td rowspan="3" style="width: 35%;">
-								Logohere
+							<td rowspan="3" style="width: 35%;text-align:center;">
+								<img src="<?php echo plugins_url( "imgs/RW-Paint-Logo3.png", __FILE__ ); ?>"/>
 							</td>
 							<td style="width: 25%;">
 								DELIVERY LOG:
 							</td>
-							<td style="width: 40%;" rowspan="3">
-								Roundlogohere
+							<td style="width: 40%;text-align:center;" rowspan="3">
+								<img src="<?php echo plugins_url( "imgs/RW-Paint-Logo3.png", __FILE__ ); ?>"/>
 							</td>
 						</tr>
 						<tr class="leave">
@@ -113,12 +115,8 @@ $item_code_name = '';
 							<td rowspan="4" class="message" style="text-align:center;">
 								<p>
 									<?php echo $order->shipping_first_name; ?>,<br/>
-									Thank you for your dedication to the JDF event. Your great<br/>
-									ideas, tireless energy and amazing organizational skills were<br/>
-									a huge part of making this our most successful year yet! You</br/>
-									have your own fan club at Marsteller.<br/>
-									<span style="text-align:left;">From Sarah, Dianne,<br/>
-									and all of the JDF 2017 Gala Committee Members</span></p>
+									<?php echo get_post_meta( $order_id, '_billing_wcj_checkout_field_1', true); ?>
+								</p>	
 							</td>
 						</tr>
 						<tr class="deliverydate bold">
@@ -157,7 +155,18 @@ $item_code_name = '';
 						</tr>
 						<tr>
 							<td colspan="2">
-								<span style="width:75%">ORD. NO: <?php echo $order_id; ?>&nbsp;&nbsp;Taken: <?php echo date('m-d-y h:i:s A', strtotime($order->order_date)); ?>&nbsp;&nbsp;Sold By: <?php echo get_post_meta($order->id, '_sold_by', true); ?></span><span class="sigbox" style="width:25%;border:1px solid;padding: 1% 13% 5%;margin: 0 3%;"></span>
+							<?php 
+							$sold_by = '';
+							$internal_use = get_post_meta($order_id, '_billing_wcj_checkout_field_10', true);
+							$web = get_post_meta($order_id, '_sold_by', true);
+							if ( null != $internal_use ){
+								$sold_by = $internal_use;
+							} else {
+								$sold_by = $web;
+							}
+							
+							?>
+								<span style="width:75%">ORD. NO: <?php echo $order_id; ?>&nbsp;&nbsp;Taken: <?php echo date('m-d-y h:i:s A', strtotime($order->order_date)); ?>&nbsp;&nbsp;Sold By: <?php echo $sold_by; ?></span><span class="sigbox" style="width:25%;border:1px solid;padding: 1% 13% 5%;margin: 0 3%;"></span>
 							</td>
 							<td>
 								Printed: <?php echo date( 'Y-m-d H:i:s A', current_time( 'timestamp' ) ); ?>
@@ -195,7 +204,26 @@ $item_code_name = '';
 						</tr>
 						<tr>
 							<td colspan="2">
-								ITEM: <strong><?php echo $item_code . '</strong> OCCASSION:' . '<span style="color:#777;font-style:italic;"><strong>Thank you</strong>  Birthday  Anniversary  Sympathy  Funeral  Valentine&rsquo;s Day  Mother&rsquo;s Day  Thanksgiving  Holiday  Miscellaneous  Gift Cert'; ?></span>
+							<?php 
+							$occasion = wc_get_order_item_meta($item_id, 'Occasion', true );
+							?>							
+								ITEM: <strong><?php echo $item_code . '</strong> OCCASION:' . '<span style="color:#777;font-style:italic;">';
+								$bold = '';
+								// if (in_array($occasion, $occasion_array)){
+									// $bold = 'occ-bold';
+								// }
+								foreach ( $occasion_array as $occ ){
+									if ($occ === $occasion){
+									$bold = 'occ-bold';
+								} 	else {
+									$bold = '';
+								}
+									echo '<span class="' . $bold . '">' . $occ . ' </span>';
+								}
+								
+								
+								
+								?></span>
 							</td>							
 						</tr>
 						<tr>
@@ -249,7 +277,7 @@ $item_code_name = '';
 						</tr>
 						<tr>
 							<td colspan="2">
-								Designer Requests: <?php echo $item_meta; ?> 
+								Designer Requests: <?php echo $designer_notes; ?> 
 							</td>
 						</tr>
 						<tr>
@@ -271,6 +299,8 @@ $item_code_name = '';
 						</tr>
 					</tbody>
 					<style>
+					.occ-bold { font-weight:bold;color:#000;}
+					img { width:100px;margin-top:-40px;}
 					table td {padding:0!important;}
 					table, table tr, table td, table th {border:none;}
 					</style>
