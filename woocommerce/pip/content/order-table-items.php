@@ -65,8 +65,11 @@ $item_code_name = '';
 							<td rowspan="3" style="width: 35%;text-align:center;">
 								<img src="<?php echo plugins_url( "imgs/RW-Paint-Logo3.png", __FILE__ ); ?>"/>
 							</td>
-							<td style="width: 25%;">
+							<td style="width: 23%;">
 								DELIVERY LOG:
+							</td>
+							<td style="width:2%">
+								&nbsp;
 							</td>
 							<td style="width: 40%;text-align:center;" rowspan="3">
 								<img src="<?php echo plugins_url( "imgs/RW-Paint-Logo3.png", __FILE__ ); ?>"/>
@@ -106,22 +109,23 @@ $item_code_name = '';
 								<br/>
 								<hr/>
 								<br/>
-								<br/>
 								<hr/>
 								<br/>
-								<br/>
 								<hr/>
+							</td>
+							<td style="width:2%">
+								&nbsp;
 							</td>
 							<td rowspan="4" class="message" style="text-align:center;">
 								<p>
 									<?php echo $order->shipping_first_name; ?>,<br/>
-									<?php echo get_post_meta( $order_id, '_billing_wcj_checkout_field_1', true); ?>
+									<span class="printed"><?php echo get_post_meta( $order_id, '_billing_wcj_checkout_field_1', true); ?></span>
 								</p>	
 							</td>
 						</tr>
 						<tr class="deliverydate bold">
 							<td>
-								DELIVERY DATE: <?php echo date('m-d-Y - l', strtotime(get_post_meta($order_id, 'jckwds_date', true))); ?>
+								<strong>DELIVERY DATE: <?php echo date('m-d-Y - l', strtotime(get_post_meta($order_id, 'jckwds_date', true))); ?></strong>
 							</td>
 						</tr>
 						<tr class="orderno">
@@ -143,18 +147,22 @@ $item_code_name = '';
 							<td>
 								Driver&#39;s Initials ________
 							</td>
+							<td style="width:2%">
+								&nbsp;
+							</td>
 							<td style="text-align:center;">
 								<small>robinwoodflowers.com 513-531-5590</small>
 							</td>
 						</tr>
+						<tr>
+							<td colspan="4">&nbsp;</td>
+						</tr>
+
 						<tr class="orderdetails">
 							<td colspan="2"></td>
-							<td>
-								ORD. NO: <?php echo $order_id; ?>&nbsp;&nbsp;Taken: <?php echo date('m-d-y h:i:s A', strtotime($order->order_date)); ?>&nbsp;&nbsp;Sold By: <?php echo get_post_meta($order->id, '_sold_by', true); ?>
+							<td style="width:2%">
+								&nbsp;
 							</td>
-						</tr>
-						<tr>
-							<td colspan="2">
 							<?php 
 							$sold_by = '';
 							$internal_use = get_post_meta($order_id, '_billing_wcj_checkout_field_10', true);
@@ -166,7 +174,16 @@ $item_code_name = '';
 							}
 							
 							?>
+							<td>
+								ORD. NO: <?php echo $order_id; ?>&nbsp;&nbsp;Taken: <?php echo date('m-d-y h:i:s A', strtotime($order->order_date)); ?>&nbsp;&nbsp;Sold By: <?php echo $sold_by; ?>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
 								<span style="width:75%">ORD. NO: <?php echo $order_id; ?>&nbsp;&nbsp;Taken: <?php echo date('m-d-y h:i:s A', strtotime($order->order_date)); ?>&nbsp;&nbsp;Sold By: <?php echo $sold_by; ?></span><span class="sigbox" style="width:25%;border:1px solid;padding: 1% 13% 5%;margin: 0 3%;"></span>
+							</td>
+							<td style="width:2%">
+								&nbsp;
 							</td>
 							<td>
 								Printed: <?php echo date( 'Y-m-d H:i:s A', current_time( 'timestamp' ) ); ?>
@@ -174,7 +191,14 @@ $item_code_name = '';
 						</tr>
 						<tr>
 							<td colspan="2">
+				<?php 
+
+					$shipping_method = $order->get_shipping_method();
+					if ($shipping_method === 'Local Delivery') { ?>
 								<strong>DELIVERY DATE: <?php echo date('m-d-Y - l', strtotime(get_post_meta( $order_id, 'jckwds_date', true ))); ?></strong>
+							</td>
+							<td style="width:2%">
+								&nbsp;
 							</td>
 							<td>
 								ITEM: <?php echo $item_code . ' ' . strtoupper($item_code_name); ?>
@@ -182,7 +206,29 @@ $item_code_name = '';
 						</tr>
 						<tr>
 							<td colspan="2">
-								PICK UP DATE: <?php ?>
+								PICK UP DATE: 
+							</td>
+				<?php } elseif ($shipping_method === 'Local pickup') { ?>
+								DELIVERY DATE: 
+											</td>
+											<td style="width:2%">
+								&nbsp;
+							</td>
+										<td>
+											ITEM: <?php echo $item_code . ' ' . strtoupper($item_code_name); ?>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<strong>PICK UP DATE: <?php echo date('m-d-Y - l', strtotime(get_post_meta( $order_id, 'jckwds_date', true ))) .' <br/> TIME SLOT:' . get_post_meta( $order_id, 'jckwds_timeslot', true ); ?></strong>
+										</td>
+					
+			<?php	}
+			?>
+							
+								
+							<td style="width:2%">
+								&nbsp;
 							</td>
 							<td>
 								<strong>DELIVERY: <?php echo date('m-d-Y - l', strtotime(get_post_meta( $order_id, 'jckwds_date', true ))); ?></strong>
@@ -192,8 +238,11 @@ $item_code_name = '';
 							<td colspan="2" style="border-bottom:1px solid">
 								&nbsp;
 							</td>
-							<td rowspan="4">
-								Recipient: <?php echo $order->get_formatted_shipping_address(); ?>
+							<td style="width:2%">
+								&nbsp;
+							</td>
+							<td rowspan="2">
+								<strong>Recipient:</strong><br/> <?php echo $order->get_formatted_shipping_address(); ?>
 							</td>
 						</tr>
 						<tr>
@@ -246,20 +295,20 @@ $item_code_name = '';
 										$product = $order->get_product_from_item($item);
 										?>
 										<tr>
-											<td>
+											<td class="bold">
 												<?php echo $cnt; ?>
 											</td>
-											<td>
+											<td class="bold">
 												<?php echo $item_code . ' - ' . $item['name']; ?>
 											</td>
-											<td>
+											<td class="bold">
 												Vibrant
 											</td>
-											<td>
-												<?php echo $product->get_price(); ?>
+											<td class="bold">
+												<?php echo wc_price($product->get_price()); ?>
 											</td>
-											<td>
-												<?php echo $order->get_total(); ?>
+											<td class="bold">
+												<?php echo wc_price($order->get_total()); ?>
 											</td>
 											
 										</tr>
@@ -270,14 +319,17 @@ $item_code_name = '';
 									</tbody>
 								</table>
 							</td>
+							<td style="width:2%">
+								&nbsp;
+							</td>
 							<td rowspan="2">
-								Sold To: <?php echo $order->get_formatted_billing_address(); ?><br/>
+								<strong>Sold To:</strong><br/> <?php echo $order->get_formatted_billing_address(); ?><br/>
 								<?php echo $order->billing_phone; ?>
 							</td>
 						</tr>
 						<tr>
 							<td colspan="2">
-								Designer Requests: <?php echo $designer_notes; ?> 
+								<strong>Designer Requests:</strong> <?php echo $designer_notes; ?> 
 							</td>
 						</tr>
 						<tr>
@@ -293,14 +345,21 @@ $item_code_name = '';
 							$business = strtoupper(get_post_meta( $order_id, '_shipping_wcj_checkout_field_5', true ));
 							$driver = substr($driver_val, 0, strpos($driver_val, "M. "));
 							?>
+							<td style="width:2%">
+								&nbsp;
+							</td>
 							<td>
-								Driver:  <?php echo $business . ' ' . $driver_val . 'M.'; ?>
+								<strong>Driver:</strong>  <?php echo $business . ' ' . $driver_val . 'M.'; ?>
 							</td>
 						</tr>
 					</tbody>
 					<style>
+					.printed { font-family: 'Great Vibes', cursive; }
+					td.bold { padding: 0.8em 1.2em; font-weight:bold; }
+					.container main { max-width: 4200px; } 
 					.occ-bold { font-weight:bold;color:#000;}
 					img { width:100px;margin-top:-40px;}
+					table { margin: 1em 0 2em }
 					table td {padding:0!important;}
 					table, table tr, table td, table th {border:none;}
 					</style>

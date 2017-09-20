@@ -20,7 +20,11 @@ function show_only_to_admins(){
 }
 add_action( 'init','show_only_to_admins' );
 
-
+add_action( 'wc_pip_head', 'add_google_font', 10, 3);
+function add_google_font( $type, $document, $order ){ ?>
+	<link href="//fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
+<?php
+}
 function wc_pip_custom_locate_template( $template, $template_name, $template_path ) {
   global $woocommerce; 
   $_template = $template;
