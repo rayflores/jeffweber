@@ -68,7 +68,7 @@ $item_code_name = '';
 							<td style="width: 23%;">
 								DELIVERY LOG:
 							</td>
-							<td style="width:2%">
+							<td style="width:4%">
 								&nbsp;
 							</td>
 							<td style="width: 40%;text-align:center;" rowspan="3">
@@ -113,13 +113,13 @@ $item_code_name = '';
 								<br/>
 								<hr/>
 							</td>
-							<td style="width:2%">
+							<td style="width:4%">
 								&nbsp;
 							</td>
 							<td rowspan="4" class="message" style="text-align:center;">
 								<p>
-									<?php echo $order->shipping_first_name; ?>,<br/>
-									<span class="printed"><?php echo get_post_meta( $order_id, '_billing_wcj_checkout_field_1', true); ?></span>
+									<span class="printed"><?php echo $order->shipping_first_name; ?>,<br/>
+									<?php echo get_post_meta( $order_id, '_billing_wcj_checkout_field_1', true); ?></span>
 								</p>	
 							</td>
 						</tr>
@@ -141,26 +141,42 @@ $item_code_name = '';
 							</td>
 						</tr>
 						<tr class="email-phone">
-							<td style="text-align:center;">
+							<td style="text-align:center;" class="green">
 								<small>robinwoodflowers.com 513-531-5590</small>
 							</td>
 							<td>
 								Driver&#39;s Initials ________
 							</td>
-							<td style="width:2%">
+							<td style="width:4%">
 								&nbsp;
 							</td>
-							<td style="text-align:center;">
+							<td style="text-align:center;" class="green">
 								<small>robinwoodflowers.com 513-531-5590</small>
 							</td>
 						</tr>
 						<tr>
 							<td colspan="4">&nbsp;</td>
 						</tr>
+						<tr>
+							<td colspan="4">&nbsp;</td>
+						</tr>
+						<tr>
+							<td colspan="4">&nbsp;</td>
+						</tr>
+						<tr>
+							<td colspan="4">&nbsp;</td>
+						</tr>
+						<tr>
+							<td colspan="4">&nbsp;</td>
+						</tr>
+						<tr>
+							<td colspan="4">&nbsp;</td>
+						</tr>
+
 
 						<tr class="orderdetails">
 							<td colspan="2"></td>
-							<td style="width:2%">
+							<td style="width:4%">
 								&nbsp;
 							</td>
 							<?php 
@@ -180,9 +196,9 @@ $item_code_name = '';
 						</tr>
 						<tr>
 							<td colspan="2">
-								<span style="width:75%">ORD. NO: <?php echo $order_id; ?>&nbsp;&nbsp;Taken: <?php echo date('m-d-y h:i:s A', strtotime($order->order_date)); ?>&nbsp;&nbsp;Sold By: <?php echo $sold_by; ?></span><span class="sigbox" style="width:25%;border:1px solid;padding: 1% 13% 5%;margin: 0 3%;"></span>
+								<span style="width:75%">ORD. NO: <?php echo $order_id; ?>&nbsp;&nbsp;Taken: <?php echo date('m-d-y h:i:s A', strtotime($order->order_date)); ?>&nbsp;&nbsp;Sold By: <?php echo $sold_by; ?></span><span class="sigbox" style="width:25%;border:1px solid;padding: 1% 21% 5%;margin-left:3%;"></span>
 							</td>
-							<td style="width:2%">
+							<td style="width:4%">
 								&nbsp;
 							</td>
 							<td>
@@ -197,7 +213,7 @@ $item_code_name = '';
 					if ($shipping_method === 'Local Delivery') { ?>
 								<strong>DELIVERY DATE: <?php echo date('m-d-Y - l', strtotime(get_post_meta( $order_id, 'jckwds_date', true ))); ?></strong>
 							</td>
-							<td style="width:2%">
+							<td style="width:4%">
 								&nbsp;
 							</td>
 							<td>
@@ -211,11 +227,11 @@ $item_code_name = '';
 				<?php } elseif ($shipping_method === 'Local pickup') { ?>
 								DELIVERY DATE: 
 											</td>
-											<td style="width:2%">
+											<td style="width:4%">
 								&nbsp;
 							</td>
 										<td>
-											ITEM: <?php echo $item_code . ' ' . strtoupper($item_code_name); ?>
+											ITEM: <?php echo $item_code . ' ' . strtoupper($item_code_name) . '    OCCASION: ' . wc_get_order_item_meta($item_id, 'Occasion', true ); ?>
 										</td>
 									</tr>
 									<tr>
@@ -227,18 +243,26 @@ $item_code_name = '';
 			?>
 							
 								
-							<td style="width:2%">
+							<td style="width:4%">
 								&nbsp;
 							</td>
-							<td>
-								<strong>DELIVERY: <?php echo date('m-d-Y - l', strtotime(get_post_meta( $order_id, 'jckwds_date', true ))); ?></strong>
+							<td> <?php 
+							if ($shipping_method === 'Local Delivery') { ?>
+								<strong>DELIVERY DATE: <?php echo date('m-d-Y - l', strtotime(get_post_meta( $order_id, 'jckwds_date', true ))); ?></strong>
 							</td>
+							
+				<?php } elseif ($shipping_method === 'Local pickup') { ?>
+								<strong>PICK UP DATE: <?php echo date('m-d-Y - l', strtotime(get_post_meta( $order_id, 'jckwds_date', true ))) .' <br/> TIME SLOT:' . get_post_meta( $order_id, 'jckwds_timeslot', true ); ?></strong>
+										</td>
+					
+			<?php	}  ?>
+
 						</tr>
 						<tr>
 							<td colspan="2" style="border-bottom:1px solid">
 								&nbsp;
 							</td>
-							<td style="width:2%">
+							<td style="width:4%">
 								&nbsp;
 							</td>
 							<td rowspan="2">
@@ -319,7 +343,7 @@ $item_code_name = '';
 									</tbody>
 								</table>
 							</td>
-							<td style="width:2%">
+							<td style="width:4%">
 								&nbsp;
 							</td>
 							<td rowspan="2">
@@ -345,7 +369,7 @@ $item_code_name = '';
 							$business = strtoupper(get_post_meta( $order_id, '_shipping_wcj_checkout_field_5', true ));
 							$driver = substr($driver_val, 0, strpos($driver_val, "M. "));
 							?>
-							<td style="width:2%">
+							<td style="width:4%">
 								&nbsp;
 							</td>
 							<td>
@@ -354,7 +378,7 @@ $item_code_name = '';
 						</tr>
 					</tbody>
 					<style>
-					.printed { font-family: 'Great Vibes', cursive; }
+					.printed { font-family: 'Great Vibes', cursive;font-size: 22px;line-height: 23px; }
 					td.bold { padding: 0.8em 1.2em; font-weight:bold; }
 					.container main { max-width: 4200px; } 
 					.occ-bold { font-weight:bold;color:#000;}
@@ -362,5 +386,6 @@ $item_code_name = '';
 					table { margin: 1em 0 2em }
 					table td {padding:0!important;}
 					table, table tr, table td, table th {border:none;}
+					.green { color:#a4b479; }
 					</style>
 					<?php
